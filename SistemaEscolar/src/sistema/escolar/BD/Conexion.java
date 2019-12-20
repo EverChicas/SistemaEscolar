@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase con la que se hace la conexión a la base de datos, la consulta y cierra
@@ -29,8 +31,8 @@ public class Conexion {
     private PreparedStatement consulta;
 
     /**
-     * Constructor de la conexion tiene el driver, path, usuario y constraseñia de
-     * la base de datos
+     * Constructor de la conexion tiene el driver, path, usuario y constraseñia
+     * de la base de datos
      */
     public Conexion() {
         conexion = null;
@@ -56,9 +58,13 @@ public class Conexion {
      */
     private void desconectar() {
         if (conexion != null) {
-            conexion.close();
-            resultados.close();
-            consulta.close();
+            try {
+                conexion.close();
+                resultados.close();
+                consulta.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -82,9 +88,7 @@ public class Conexion {
     }
 
     // CONSULTAS A BASE DE DATOS
-
     // CONSULTAS FACILES
-
     public List<String> cargarDatos(final String tabla, final String columna) {
         final List<String> tmp = new ArrayList<String>();
         try {

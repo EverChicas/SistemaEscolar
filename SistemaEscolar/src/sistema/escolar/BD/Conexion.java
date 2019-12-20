@@ -69,6 +69,7 @@ public class Conexion {
                 tmp += 1;
             }
             tmp += 1;
+            desconectar();
             return tmp;
         } catch (Exception ex) {
             return tmp;
@@ -90,6 +91,7 @@ public class Conexion {
             while (resultados.next()) {
                 tmp.add(resultados.getString(columna));
             }
+            desconectar();
             return tmp;
         } catch (Exception ex) {
             return tmp;
@@ -110,6 +112,7 @@ public class Conexion {
                 temp.setApellido(resultados.getString(3));
                 temp.setTipoContrato(resultados.getString(4));
             }
+            desconectar();
             return temp;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -132,6 +135,7 @@ public class Conexion {
                 temp.setNombre(resultados.getString(2));
                 temp.setApellido(resultados.getString(3));
             }
+            desconectar();
             return temp;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -153,6 +157,7 @@ public class Conexion {
                 temp.setIdGrado(resultados.getInt(1));
                 temp.setNombre(resultados.getString(2));
             }
+            desconectar();
             return temp;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -174,6 +179,7 @@ public class Conexion {
                 temp.setIdGrado(resultados.getInt(1));
                 temp.setNombre(resultados.getString(2));
             }
+            desconectar();
             return temp;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -196,6 +202,7 @@ public class Conexion {
                 temp.setNombre(resultados.getString(2));
                 temp.setCantidad(resultados.getDouble(3));
             }
+            desconectar();
             return temp;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -218,6 +225,7 @@ public class Conexion {
                 temp.setNombre(resultados.getString(2));
                 temp.setCantidad(resultados.getDouble(3));
             }
+            desconectar();
             return temp;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -241,6 +249,7 @@ public class Conexion {
                 temp.setApellido(resultados.getString(3));
                 temp.setTelefono(resultados.getString(4));
             }
+            desconectar();
             return temp;
         } catch (Exception ex) {
             return temp;
@@ -261,6 +270,7 @@ public class Conexion {
                 temp.setApellido(resultados.getString(3));
                 temp.setTelefono(resultados.getString(4));
             }
+            desconectar();
             return temp;
         } catch (Exception ex) {
             return temp;
@@ -291,6 +301,7 @@ public class Conexion {
                 temp.setTutor(buscarTutor(IDTutor));
                 temp.setGrado(buscarGrado(IDGrado));
             }
+            desconectar();
             return temp;
         } catch (Exception ex) {
             return temp;
@@ -320,6 +331,7 @@ public class Conexion {
                 temp.setTutor(buscarTutor(IDTutor));
                 temp.setGrado(buscarGrado(IDGrado));
             }
+            desconectar();
             return temp;
         } catch (Exception ex) {
             return temp;
@@ -342,6 +354,7 @@ public class Conexion {
                 IDDocente = resultados.getInt(3);
                 temp.setDocente(buscarDocente(IDDocente));
             }
+            desconectar();
             return temp;
         } catch (Exception ex) {
             return temp;
@@ -364,6 +377,7 @@ public class Conexion {
                 IDDocente = resultados.getInt(3);
                 temp.setDocente(buscarDocente(IDDocente));
             }
+            desconectar();
             return temp;
         } catch (Exception ex) {
             return temp;
@@ -388,6 +402,7 @@ public class Conexion {
                 horarioDeGrado
                         .add(new Horario(resultado.getString(3), resultado.getString(4), temp1, buscarCurso(IDCurso)));
             }
+            desconectar();
             return horarioDeGrado;
         } catch (Exception ex) {
             return horarioDeGrado;
@@ -410,6 +425,7 @@ public class Conexion {
                 IDPago = resultado.getInt(2);
                 listaDePagos.add(new PagosAlumno(temp1, buscarPago(IDPago), resultado.getString(3)));
             }
+            desconectar();
             return listaDePagos;
         } catch (Exception ec) {
             return listaDePagos;
@@ -433,6 +449,7 @@ public class Conexion {
                 IDCurso = resultado.getInt(2);
                 listaDeNotas.add(new NotasAlumno(tmp, buscarCurso(IDCurso), resultado.getInt(3)));
             }
+            desconectar();
             return listaDeNotas;
         } catch (Exception ex) {
             return listaDeNotas;
@@ -449,6 +466,7 @@ public class Conexion {
             consulta.setString(3, tmp.getApellido());
             consulta.setString(4, tmp.getTipoContrato());
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -463,6 +481,7 @@ public class Conexion {
             consulta.setString(1, String.valueOf(tmp.getIdGrado()));
             consulta.setString(2, tmp.getNombre());
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -478,6 +497,7 @@ public class Conexion {
             consulta.setString(2, tmp.getNombre());
             consulta.setString(3, String.valueOf(tmp.getCantidad()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -495,6 +515,7 @@ public class Conexion {
             consulta.setString(3, tmp.getApellido());
             consulta.setString(4, tmp.getTelefono());
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -515,6 +536,7 @@ public class Conexion {
             consulta.setString(6, String.valueOf(tmp.getTutor().getIdTutor()));
             consulta.setString(7, String.valueOf(tmp.getGrado().getIdGrado()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -530,6 +552,7 @@ public class Conexion {
             consulta.setString(2, tmp.getNombre());
             consulta.setString(3, String.valueOf(tmp.getDocente().getIdDocente()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -545,6 +568,7 @@ public class Conexion {
             consulta.setString(2, String.valueOf(tmp.getPago().getIdPago()));
             consulta.setString(3, tmp.getDetalle());
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -561,6 +585,7 @@ public class Conexion {
             consulta.setString(2, String.valueOf(tmp.getCurso().getIdCurso()));
             consulta.setString(3, String.valueOf(tmp.getNota()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -578,6 +603,7 @@ public class Conexion {
             consulta.setString(3, tmp.getHora());
             consulta.setString(4, tmp.getDia());
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -595,6 +621,7 @@ public class Conexion {
             consulta.setString(3, tmp.getTipoContrato());
             consulta.setString(4, String.valueOf(tmp.getIdDocente()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -609,6 +636,7 @@ public class Conexion {
             consulta.setString(1, tmp.getNombre());
             consulta.setString(2, String.valueOf(tmp.getIdGrado()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -624,6 +652,7 @@ public class Conexion {
             consulta.setString(2, String.valueOf(tmp.getCantidad()));
             consulta.setString(3, String.valueOf(tmp.getIdPago()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -641,6 +670,7 @@ public class Conexion {
             consulta.setString(3, tmp.getTelefono());
             consulta.setString(4, String.valueOf(tmp.getIdTutor()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -661,6 +691,7 @@ public class Conexion {
             consulta.setString(6, String.valueOf(tmp.getGrado().getIdGrado()));
             consulta.setString(7, String.valueOf(tmp.getCarnet()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -676,6 +707,7 @@ public class Conexion {
             consulta.setString(2, String.valueOf(tmp.getDocente().getIdDocente()));
             consulta.setString(3, String.valueOf(tmp.getIdCurso()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -693,6 +725,7 @@ public class Conexion {
             consulta.setString(3, tmp.getDetalle());
             consulta.setString(4, String.valueOf(tmp.getAlumno().getCarnet()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -710,6 +743,7 @@ public class Conexion {
             consulta.setString(3, String.valueOf(tmp.getNota()));
             consulta.setString(4, String.valueOf(tmp.getAlumno().getCarnet()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -728,6 +762,7 @@ public class Conexion {
             consulta.setString(4, tmp.getDia());
             consulta.setString(5, String.valueOf(tmp.getGrado().getIdGrado()));
             consulta.executeUpdate();
+            desconectar();
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -745,6 +780,7 @@ public class Conexion {
             resultados = consulta.executeQuery();
 
             if (resultados.next()) {
+                desconectar();
                 return true;
             }
         } catch (Exception ex) {

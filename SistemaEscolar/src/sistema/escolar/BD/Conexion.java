@@ -33,7 +33,9 @@ public class Conexion {
      * la base de datos
      */
     public Conexion() {
-        desconectar();// inicializo las variables a null
+        conexion = null;
+        resultados = null;
+        consulta = null;
     }
 
     /**
@@ -50,15 +52,17 @@ public class Conexion {
     }
 
     /**
-     * Hago que mis variables de conexion, resultset quede en null
+     * Hago que mis variables de conexion, resultset queden cerradas
      */
     private void desconectar() {
-        conexion = null;
-        resultados = null;
-        consulta = null;
+        if (conexion != null) {
+            conexion.close();
+            resultados.close();
+            consulta.close();
+        }
     }
 
-    public int numeroDeFila(String tabla) {
+    public int numeroDeFila(final String tabla) {
         int tmp = 0;
         try {
             conectar();
@@ -71,7 +75,7 @@ public class Conexion {
             tmp += 1;
             desconectar();
             return tmp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return tmp;
         }
 
@@ -81,8 +85,8 @@ public class Conexion {
 
     // CONSULTAS FACILES
 
-    public List<String> cargarDatos(String tabla, String columna) {
-        List<String> tmp = new ArrayList<String>();
+    public List<String> cargarDatos(final String tabla, final String columna) {
+        final List<String> tmp = new ArrayList<String>();
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM " + tabla);
@@ -93,13 +97,13 @@ public class Conexion {
             }
             desconectar();
             return tmp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return tmp;
         }
     }
 
-    public Docente buscarDocente(String nombre) {
-        Docente temp = new Docente(0, "", "", "");
+    public Docente buscarDocente(final String nombre) {
+        final Docente temp = new Docente(0, "", "", "");
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM docente WHERE nombre = ?");
@@ -114,7 +118,7 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             System.out.println(ex.getMessage());
             return temp;
         } finally {
@@ -122,8 +126,8 @@ public class Conexion {
         }
     }
 
-    public Docente buscarDocente(int idDocente) {
-        Docente temp = new Docente(0, "", "", "");
+    public Docente buscarDocente(final int idDocente) {
+        final Docente temp = new Docente(0, "", "", "");
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM docente WHERE id_docente = ?");
@@ -137,7 +141,7 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             System.out.println(ex.getMessage());
             return temp;
         } finally {
@@ -145,8 +149,8 @@ public class Conexion {
         }
     }
 
-    public Grado buscarGrado(String nombre) {
-        Grado temp = new Grado(0, "");
+    public Grado buscarGrado(final String nombre) {
+        final Grado temp = new Grado(0, "");
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM grado WHERE nombre = ?");
@@ -159,7 +163,7 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             System.out.println(ex.getMessage());
             return temp;
         } finally {
@@ -167,8 +171,8 @@ public class Conexion {
         }
     }
 
-    public Grado buscarGrado(int idGrado) {
-        Grado temp = new Grado(0, "");
+    public Grado buscarGrado(final int idGrado) {
+        final Grado temp = new Grado(0, "");
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM grado WHERE id_grado = ?");
@@ -181,7 +185,7 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             System.out.println(ex.getMessage());
             return temp;
         } finally {
@@ -189,8 +193,8 @@ public class Conexion {
         }
     }
 
-    public Pago buscarPago(String nombre) {
-        Pago temp = new Pago(0, "", 0);
+    public Pago buscarPago(final String nombre) {
+        final Pago temp = new Pago(0, "", 0);
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM pago WHERE nombre = ?");
@@ -204,7 +208,7 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             System.out.println(ex.getMessage());
             return temp;
         } finally {
@@ -212,8 +216,8 @@ public class Conexion {
         }
     }
 
-    public Pago buscarPago(int idPago) {
-        Pago temp = new Pago(0, "", 0);
+    public Pago buscarPago(final int idPago) {
+        final Pago temp = new Pago(0, "", 0);
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM pago WHERE id_pago = ?");
@@ -227,7 +231,7 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             System.out.println(ex.getMessage());
             return temp;
         } finally {
@@ -235,8 +239,8 @@ public class Conexion {
         }
     }
 
-    public Tutor buscarTutor(String nombre) {
-        Tutor temp = new Tutor(0, "", "", "");
+    public Tutor buscarTutor(final String nombre) {
+        final Tutor temp = new Tutor(0, "", "", "");
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM tutor WHERE nombre = ?");
@@ -251,13 +255,13 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return temp;
         }
     }
 
-    public Tutor buscarTutor(int IDTutor) {
-        Tutor temp = new Tutor(0, "", "", "");
+    public Tutor buscarTutor(final int IDTutor) {
+        final Tutor temp = new Tutor(0, "", "", "");
         try {
             conectar();
             consulta = conexion.prepareStatement("SELECT * FROM tutor WHERE id_tutor = ?");
@@ -272,14 +276,14 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return temp;
         }
     }
 
     // CONSULTAS CON COMPOSICION DE OTRO OBJETO
-    public Alumno buscarAlumno(String nombre) {
-        Alumno temp = new Alumno(0, "", "", 0, "", null, null);
+    public Alumno buscarAlumno(final String nombre) {
+        final Alumno temp = new Alumno(0, "", "", 0, "", null, null);
         int IDGrado;
         int IDTutor;
         try {
@@ -303,13 +307,13 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return temp;
         }
     }
 
-    public Alumno buscarAlumno(int carnet) {
-        Alumno temp = new Alumno(0, "", "", 0, "", null, null);
+    public Alumno buscarAlumno(final int carnet) {
+        final Alumno temp = new Alumno(0, "", "", 0, "", null, null);
         int IDGrado;
         int IDTutor;
         try {
@@ -333,13 +337,13 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return temp;
         }
     }
 
-    public Curso buscarCurso(String nombre) {
-        Curso temp = new Curso(0, "", null);
+    public Curso buscarCurso(final String nombre) {
+        final Curso temp = new Curso(0, "", null);
         int IDDocente;
         try {
             conectar();
@@ -356,13 +360,13 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return temp;
         }
     }
 
-    public Curso buscarCurso(int idCurso) {
-        Curso temp = new Curso(0, "", null);
+    public Curso buscarCurso(final int idCurso) {
+        final Curso temp = new Curso(0, "", null);
         int IDDocente;
         try {
             conectar();
@@ -379,16 +383,16 @@ public class Conexion {
             }
             desconectar();
             return temp;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return temp;
         }
     }
 
     // CONSULTAS QUE DEVUELVEN UNA LISTA
-    public List<Horario> buscarHorario(String grado) {
+    public List<Horario> buscarHorario(final String grado) {
         ResultSet resultado;
-        List<Horario> horarioDeGrado = new ArrayList<Horario>();
-        Grado temp1 = buscarGrado(grado);
+        final List<Horario> horarioDeGrado = new ArrayList<Horario>();
+        final Grado temp1 = buscarGrado(grado);
         int IDCurso;
 
         try {
@@ -404,15 +408,15 @@ public class Conexion {
             }
             desconectar();
             return horarioDeGrado;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return horarioDeGrado;
         }
     }
 
-    public List<PagosAlumno> buscarPagosDeAlumno(String nombreAlumno) {
+    public List<PagosAlumno> buscarPagosDeAlumno(final String nombreAlumno) {
         ResultSet resultado;
-        List<PagosAlumno> listaDePagos = new ArrayList<PagosAlumno>();
-        Alumno temp1 = buscarAlumno(nombreAlumno);
+        final List<PagosAlumno> listaDePagos = new ArrayList<PagosAlumno>();
+        final Alumno temp1 = buscarAlumno(nombreAlumno);
         int IDPago;
 
         try {
@@ -427,16 +431,16 @@ public class Conexion {
             }
             desconectar();
             return listaDePagos;
-        } catch (Exception ec) {
+        } catch (final Exception ec) {
             return listaDePagos;
         }
 
     }
 
-    public List<NotasAlumno> buscarNotasDeAlumno(String nombreAlumno) {
+    public List<NotasAlumno> buscarNotasDeAlumno(final String nombreAlumno) {
         ResultSet resultado;
-        List<NotasAlumno> listaDeNotas = new ArrayList<NotasAlumno>();
-        Alumno tmp = buscarAlumno(nombreAlumno);
+        final List<NotasAlumno> listaDeNotas = new ArrayList<NotasAlumno>();
+        final Alumno tmp = buscarAlumno(nombreAlumno);
         int IDCurso;
 
         try {
@@ -451,12 +455,12 @@ public class Conexion {
             }
             desconectar();
             return listaDeNotas;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return listaDeNotas;
         }
     }
 
-    public boolean insertarDocente(Docente tmp) {
+    public boolean insertarDocente(final Docente tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement(
@@ -468,13 +472,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarGrado(Grado tmp) {
+    public boolean insertarGrado(final Grado tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("INSERT INTO grado " + "(id_grado,nombre) VALUES(?,?)");
@@ -483,13 +487,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarPago(Pago tmp) {
+    public boolean insertarPago(final Pago tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("INSERT INTO pago " + "(id_pago,descripcion,cantidad) VALUES(?,?,?)");
@@ -499,13 +503,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarTutor(Tutor tmp) {
+    public boolean insertarTutor(final Tutor tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement(
@@ -517,13 +521,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarAlumno(Alumno tmp) {
+    public boolean insertarAlumno(final Alumno tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("INSERT INTO alumno "
@@ -538,13 +542,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarCurso(Curso tmp) {
+    public boolean insertarCurso(final Curso tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("INSERT INTO curso " + "(id_curso,nombre,id_docente) VALUES(?,?,?)");
@@ -554,13 +558,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarPagoDeAlumno(PagosAlumno tmp) {
+    public boolean insertarPagoDeAlumno(final PagosAlumno tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("INSERT INTO alumno_pago " + "(carnet,id_pago,detalle) VALUES(?,?,?)");
@@ -570,13 +574,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarNotaDeAlumno(NotasAlumno tmp) {
+    public boolean insertarNotaDeAlumno(final NotasAlumno tmp) {
         try {
             conectar();
             consulta = conexion
@@ -587,13 +591,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean insertarHorario(Horario tmp) {
+    public boolean insertarHorario(final Horario tmp) {
         try {
             conectar();
             consulta = conexion
@@ -605,13 +609,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizarDocente(Docente tmp) {
+    public boolean actualizarDocente(final Docente tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement(
@@ -623,13 +627,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizarGrado(Grado tmp) {
+    public boolean actualizarGrado(final Grado tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("UPDATE grado SET nombre = ? WHERE id_grado = ?");
@@ -638,13 +642,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualiarPago(Pago tmp) {
+    public boolean actualiarPago(final Pago tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("UPDATE pago SET " + "descripcion = ?,cantidad = ? WHERE id_pago = ?");
@@ -654,13 +658,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizarTutor(Tutor tmp) {
+    public boolean actualizarTutor(final Tutor tmp) {
         try {
             conectar();
             consulta = conexion
@@ -672,13 +676,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizarAlumno(Alumno tmp) {
+    public boolean actualizarAlumno(final Alumno tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("UPDATE alumno SET "
@@ -693,13 +697,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizarCurso(Curso tmp) {
+    public boolean actualizarCurso(final Curso tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement("UPDATE curso SET " + "nombre = ?,id_docente = ? WHERE id_curso = ?");
@@ -709,13 +713,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizarPagoDeAlumno(PagosAlumno tmp) {
+    public boolean actualizarPagoDeAlumno(final PagosAlumno tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement(
@@ -727,13 +731,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizarNotaDeAlumno(NotasAlumno tmp) {
+    public boolean actualizarNotaDeAlumno(final NotasAlumno tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement(
@@ -745,13 +749,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean actualizrHorario(Horario tmp) {
+    public boolean actualizrHorario(final Horario tmp) {
         try {
             conectar();
             consulta = conexion.prepareStatement(
@@ -764,13 +768,13 @@ public class Conexion {
             consulta.executeUpdate();
             desconectar();
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
-    public boolean existeNota(Alumno alumno, Curso curso) {
+    public boolean existeNota(final Alumno alumno, final Curso curso) {
         try {
             conectar();
             consulta = conexion
@@ -783,7 +787,7 @@ public class Conexion {
                 desconectar();
                 return true;
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return false;
         }
         return false;

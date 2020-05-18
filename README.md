@@ -1,6 +1,4 @@
-## Sistema Escolar
-
-# Sistema Escolar 
+# Sistema Escolar
 ## Java MySql
 :school:
 :mortar_board:
